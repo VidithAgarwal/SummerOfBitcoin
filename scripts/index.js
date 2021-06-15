@@ -11,17 +11,15 @@ async function getValidTransactions (){
 		const tx_id = columns[0];
 		const fee = columns[1];
 		const weight = columns[2];
-		const parents = columns[3].split(';');
+		const parents = columns[3];
 
-		if (parents[0] === '') {
+		if (parents === '') {
 			validTransactions.push({ tx_id, fee, weight });
 		}
 		else {
-			parents.forEach((parent) => {
-				if (validTransactions.find((el) => el.tx_id === parent)) {
-					validTransactions.push({ tx_id, fee, weight });
-				}
-			});
+			if (validTransactions.find((el) => el.tx_id === parents)) {
+				validTransactions.push({ tx_id, fee, weight });
+			}
 		}
 	});
 	return validTransactions;
